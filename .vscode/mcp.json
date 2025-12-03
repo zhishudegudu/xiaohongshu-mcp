@@ -1,9 +1,9 @@
 {
-    "servers": {
-        "xiaohongshu-mcp": {
-            "url": "http://localhost:18060/mcp",
-            "type": "http"
-        }
-    },
-    "inputs": []
+	"servers": {
+		"xiaohongshu-mcp": {
+			"url": "http://192.168.21.59:18060/mcp",
+			"type": "http"
+		}
+	},
+	"inputs": []
 }
