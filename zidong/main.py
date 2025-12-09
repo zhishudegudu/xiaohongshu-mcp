@@ -24,9 +24,15 @@ def main():
     ai_generator = AIGenerator(
         api_key=config.gemini_api_key,
         base_url=config.gemini_base_url,
-        model=config.gemini_model
+        model=config.gemini_model,
+        proxy=config.gemini_proxy
     )
-    publisher = Publisher(mcp_client, config.image_folder, config.local_image_folder)
+    publisher = Publisher(
+        mcp_client, 
+        config.image_folder, 
+        config.local_image_folder,
+        pixabay_api_key=config.pixabay_api_key
+    )
     
     # 2. 检查登录状态
     print("\n🔐 检查登录状态...")

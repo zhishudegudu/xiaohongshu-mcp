@@ -83,10 +83,22 @@ class Config:
     """全局配置"""
     
     # Gemini API配置
-    gemini_api_key: str = os.getenv("GEMINI_API_KEY", "AIzaSyDI3LI2jtM1gKdmnylhoeBnkSod3Mt4sjw")
+    # ⚠️ 重要：不要在代码中硬编码 API Key！请使用环境变量
+    # 设置方法：$env:GEMINI_API_KEY="你的新API Key"
+    gemini_api_key: str = os.getenv("GEMINI_API_KEY", "AIzaSyA53mDfUtrYYAD-FNhn2bGWGmgDFN_Tjts")
     gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta/openai/"
     # 可用模型: gemini-2.5-flash (快速), gemini-2.5-pro (高质量), gemini-flash-latest
     gemini_model: str = "gemini-2.5-flash"
+    
+    # Gemini 代理配置（如果你的地区不支持 Gemini API）
+    # 设置方法：$env:GEMINI_PROXY="http://127.0.0.1:7890"
+    # 或者：$env:GEMINI_PROXY="socks5://127.0.0.1:7890"
+    gemini_proxy: str = os.getenv("GEMINI_PROXY", "")
+    
+    # Pixabay API 配置（用于自动下载图片）
+    # 注册地址：https://pixabay.com/api/docs/
+    # 设置方法：$env:PIXABAY_API_KEY="你的API_Key"
+    pixabay_api_key: str = os.getenv("PIXABAY_API_KEY", "53626706-ebfb74caeb7c442e4d6d40d9d")
     
     # MCP服务器配置
     # 如果在同一台机器上运行Python和MCP服务器，使用 localhost

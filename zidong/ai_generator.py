@@ -4,15 +4,39 @@ AI内容生成模块
 import json
 from typing import Dict, Any, Optional
 from openai import OpenAI
+import httpx
 
 
 class AIGenerator:
     """AI内容生成器（基于Gemini）"""
     
-    def __init__(self, api_key: str, base_url: str, model: str = "gemini-1.5-pro"):
+    def __init__(self, api_key: str, base_url: str, model: str = "gemini-1.5-pro", proxy: str = None):
+        # 创建 HTTP 客户端
+        # 如果需要访问 Gemini API，可能需要使用代理（地区限制）
+        import os
+        
+        # 优先级：参数 > GEMINI_PROXY > http_proxy/https_proxy > 默认代理
+        # 【强制使用代理】如果没有指定代理，默认使用 1080 端口
+        proxy_url = (
+            proxy or 
+            os.getenv("GEMINI_PROXY") or 
+            os.getenv("https_proxy") or 
+            os.getenv("http_proxy") or
+            "http://127.0.0.1:1080"  # 默认代理地址
+        )
+        
+        print(f"🌐 使用代理: {proxy_url}")
+        
+        # 强制使用代理创建 HTTP 客户端
+        http_client = httpx.Client(
+            proxy=proxy_url,  # 注意是 proxy 不是 proxies
+            timeout=60.0
+        )
+        
         self.client = OpenAI(
             api_key=api_key,
-            base_url=base_url
+            base_url=base_url,
+            http_client=http_client  # 使用自定义 HTTP 客户端
         )
         self.model = model
     

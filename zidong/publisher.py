@@ -11,7 +11,7 @@ from image_downloader import ImageDownloader
 class Publisher:
     """内容发布器"""
     
-    def __init__(self, mcp_client: MCPClient, image_folder: str, local_image_folder: str = None):
+    def __init__(self, mcp_client: MCPClient, image_folder: str, local_image_folder: str = None, pixabay_api_key: str = None):
         """
         初始化发布器
         
@@ -19,11 +19,12 @@ class Publisher:
             mcp_client: MCP 客户端
             image_folder: MCP 服务器可访问的图片路径（如 Docker 容器内路径 /app/images）
             local_image_folder: 本地图片文件夹路径（用于选择图片），如果为 None 则使用 image_folder
+            pixabay_api_key: Pixabay API Key（用于自动下载图片）
         """
         self.mcp_client = mcp_client
         self.image_folder = image_folder  # 发送给 MCP 服务器的路径
         self.local_image_folder = local_image_folder or image_folder  # 本地选择图片的路径
-        self.image_downloader = ImageDownloader(local_image_folder)  # 图片下载器
+        self.image_downloader = ImageDownloader(local_image_folder, pixabay_api_key)  # 图片下载器
     
     def get_random_images(self, count: int = 1) -> List[str]:
         """
